@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/wild4est/Desktop/qwa/java/JOGL1/gluegen-rt.jar" sourcepath="C:/Users/wild4est/Desktop/qwa/java/JOGL1/gluegen-java-src.zip">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/wild4est/Desktop/qwa/java/JOGL1"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/wild4est/Desktop/qwa/java/JOGL1/jogl-all.jar" sourcepath="C:/Users/wild4est/Desktop/qwa/java/JOGL1/jogl-java-src.zip">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/wild4est/Desktop/qwa/java/JOGL1"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
