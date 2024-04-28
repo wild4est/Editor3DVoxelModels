@@ -1,3 +1,6 @@
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JFrame;
 
 import com.jogamp.opengl.GL2;
@@ -12,6 +15,8 @@ import com.jogamp.opengl.util.FPSAnimator;
 public class MainWindow implements GLEventListener{
 	
 	private GLU glu = new GLU();
+	private static float fi=0;
+	private static char side;
 
 	public static void main(String[] args) {
 		final GLProfile profile = GLProfile.get( GLProfile.GL2 );
@@ -27,6 +32,22 @@ public class MainWindow implements GLEventListener{
 	    frame.getContentPane().add( glcanvas );
 	    frame.setSize( frame.getContentPane().getPreferredSize() );
 	    frame.setVisible( true );
+	    
+	    
+	    frame.addKeyListener(new KeyAdapter() {
+    	  	public void keyPressed(KeyEvent e) {
+    	  		fi = 0.05f;
+                if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+                	fi = 0.05f;
+                	
+                }
+            }
+    	  
+            public void keyReleased(KeyEvent e) {
+            	fi = 0;
+            }
+             
+        });
 	    
 	    final FPSAnimator animator = new FPSAnimator(glcanvas, 300,true);
 		
@@ -61,10 +82,14 @@ public class MainWindow implements GLEventListener{
 		gl.glLoadIdentity();
 		gl.glTranslatef( 0f, 0f, -3.0f ); 
 		
-		Voxel cube = new Voxel(gl, 10f, 46f, 139f, 87f);
-		cube.draw(0, 0, 0);
-	      
-	      
+		Voxel cube = new Voxel(gl, 100f, 46f, 139f, 87f);
+		cube.setPos(0, 0, 0);
+		cube.rotate(fi);
+		cube.draw();
+		
+		
+		System.out.println("X:" + cube.getX() + "  Y:" + cube.getY());
+		
 		
 	}
 

@@ -11,6 +11,9 @@ public class Voxel {
 	private float Rcolor;
 	private float Gcolor;
 	private float Bcolor;
+	private float cosF;
+	private float sinF;
+	
 	
 	
 	Voxel(GL2 gl2, float vs, float r, float g, float b){
@@ -20,29 +23,44 @@ public class Voxel {
 		Rcolor = r/255;
 		Gcolor = g/255;
 		Bcolor = b/255;
+		
+		x_per = 0;
+		y_per = 0;
+		z_per = 0;
 	}
 	
-	public void draw(float x, float y, float z) {
+	public void setPos(float x, float y, float z) {
 		x_per = x;
 		y_per = y;
 		z_per = z;
-		
-		gl.glBegin(GL2.GL_QUADS);
+	}
+	
+	public float getX() {
+		return x_per;
+	}
+	
+	public float getY() {
+		return y_per;
+	}
+	
+	public void draw() {
+	    
+	    gl.glBegin(GL2.GL_QUADS);
 	    gl.glColor3f(Rcolor,Gcolor,Bcolor);
 	    gl.glVertex3f((vox_size + x_per)/350, (vox_size + y_per)/350, (-vox_size + z_per)/350);
 	    gl.glVertex3f( (-vox_size + x_per)/350, (vox_size + y_per)/350,( -vox_size + z_per)/350);
 	    gl.glVertex3f( (-vox_size + x_per)/350, (vox_size + y_per)/350,( vox_size + z_per)/350 );
 	    gl.glVertex3f( (vox_size + x_per)/350, (vox_size + y_per)/350, (vox_size + z_per)/350 );
-	    
+			
 	    gl.glVertex3f( (vox_size + x_per)/350, (-vox_size + y_per)/350, (vox_size + z_per)/350 );
 	    gl.glVertex3f( (-vox_size + x_per)/350,( -vox_size + y_per)/350,( vox_size + z_per)/350);
 	    gl.glVertex3f( (-vox_size + x_per)/350,( -vox_size + y_per)/350,( -vox_size + z_per)/350 );
-	    gl.glVertex3f( (vox_size + x_per)/350, (-vox_size + y_per)/350, (-vox_size + z_per)/350 ); 
+	    gl.glVertex3f( (vox_size + x_per)/350, (-vox_size + y_per)/350, (-vox_size + z_per)/350 );
 
 	    gl.glVertex3f( (vox_size + x_per)/350, (vox_size + y_per)/350, (vox_size + z_per)/350 );
 	    gl.glVertex3f( (-vox_size + x_per)/350,( vox_size + y_per)/350, (vox_size + z_per)/350 );
 	    gl.glVertex3f( (-vox_size + x_per)/350,( -vox_size + y_per)/350,( vox_size + z_per)/350 );
-	    gl.glVertex3f( (vox_size + x_per)/350, (-vox_size + y_per)/350, (vox_size + z_per)/350 ); 
+	    gl.glVertex3f( (vox_size + x_per)/350, (-vox_size + y_per)/350, (vox_size + z_per)/350 );
 
 	    gl.glVertex3f( (vox_size + x_per)/350, (-vox_size + y_per)/350, (-vox_size + z_per)/350);
 	    gl.glVertex3f( (-vox_size + x_per)/350, (-vox_size + y_per)/350, (-vox_size + z_per)/350 );
@@ -52,13 +70,19 @@ public class Voxel {
 	    gl.glVertex3f( (-vox_size + x_per)/350, (vox_size + y_per)/350, (vox_size + z_per)/350 );
 	    gl.glVertex3f( (-vox_size + x_per)/350, (vox_size + y_per)/350, (-vox_size + z_per)/350 );
 	    gl.glVertex3f( (-vox_size + x_per)/350, (-vox_size + y_per)/350, (-vox_size + z_per)/350 );
-	    gl.glVertex3f( (-vox_size + x_per)/350, (-vox_size + y_per)/350, (vox_size + z_per)/350 ); 
+	    gl.glVertex3f( (-vox_size + x_per)/350, (-vox_size + y_per)/350, (vox_size + z_per)/350 );
 
 	    gl.glVertex3f( (vox_size + x_per)/350,( vox_size + y_per)/350, (-vox_size + z_per)/350 );
 	    gl.glVertex3f( (vox_size + x_per)/350,( vox_size + y_per)/350, (vox_size + z_per)/350 );
 	    gl.glVertex3f( (vox_size + x_per)/350,( -vox_size + y_per)/350, (vox_size + z_per)/350 );
 	    gl.glVertex3f(( vox_size + x_per)/350,( -vox_size + y_per)/350,( -vox_size + z_per)/350 );
 	    gl.glEnd();
+	    
+	}
+	
+	public void rotate(float fi) {
+		cosF = (float)Math.cos(fi);
+		sinF = (float)Math.sin(fi);
 	}
 	
 
