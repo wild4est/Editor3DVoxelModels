@@ -15,7 +15,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 public class MainWindow implements GLEventListener{
 	
 	private GLU glu = new GLU();
-	private static float fi=0;
+	private static float fi=0.5f;
 	private static char side;
 
 	public static void main(String[] args) {
@@ -87,8 +87,10 @@ public class MainWindow implements GLEventListener{
 		cube.rotate(fi);
 		cube.draw();
 		
+		fi+=0.01f;
 		
-		System.out.println("X:" + cube.getX() + "  Y:" + cube.getY());
+		
+		//System.out.println("X:" + cube.getX() + "  Y:" + cube.getY());
 		
 		
 	}
