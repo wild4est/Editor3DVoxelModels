@@ -15,10 +15,18 @@ import com.jogamp.opengl.util.FPSAnimator;
 public class MainWindow implements GLEventListener{
 	
 	private GLU glu = new GLU();
-	private static float fi=0.5f;
-	private static char side;
-
+	private static float fi=0;
+	private static char side='o';
+	
+	
+	private static float[][] coor_vec = new float[3][3];
+	
 	public static void main(String[] args) {
+		
+		coor_vec[0][0]=1; coor_vec[0][1]=0; coor_vec[0][2]=0;
+		coor_vec[1][0]=0; coor_vec[1][1]=1; coor_vec[1][2]=0;
+		coor_vec[2][0]=0; coor_vec[2][1]=0; coor_vec[2][2]=1;
+		
 		final GLProfile profile = GLProfile.get( GLProfile.GL2 );
 	    GLCapabilities capabilities = new GLCapabilities( profile );
 	      
@@ -36,9 +44,28 @@ public class MainWindow implements GLEventListener{
 	    
 	    frame.addKeyListener(new KeyAdapter() {
     	  	public void keyPressed(KeyEvent e) {
-    	  		fi = 0.05f;
                 if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+                	
                 	fi = 0.05f;
+                	side = 'Y';
+                	
+                }
+                if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                	
+                	fi = -0.05f;
+                	side = 'Y';
+                	
+                }
+                if(e.getKeyCode() == KeyEvent.VK_UP) {
+                	
+                	fi = 0.05f;
+                	side = 'X';
+                	
+                }
+                if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+                	
+                	fi = -0.05f;
+                	side = 'X';
                 	
                 }
             }
@@ -84,13 +111,13 @@ public class MainWindow implements GLEventListener{
 		
 		Voxel cube = new Voxel(gl, 100f, 46f, 139f, 87f);
 		cube.setPos(0, 0, 0);
-		cube.rotate(fi);
+		cube.rotate(coor_vec, fi, side);
 		cube.draw();
 		
-		fi+=0.01f;
-		
+		//fi+=0.01f;
 		
 		//System.out.println("X:" + cube.getX() + "  Y:" + cube.getY());
+		
 		
 		
 	}
