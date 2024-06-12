@@ -1,5 +1,9 @@
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -12,11 +16,27 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 
+/*
+ * TODO: 
+ * 	 - Отрисовка только лицевых граней
+ * 	 - Выбор грани кубика
+ * 	 - Отрисовка нового кубика на выбраной грани
+ *   - Удаление выбранного кубика
+ *   
+ *   
+ *   - Изменение цвета кубиков
+ *   - Сохранение/загрузка модельки
+ */
+
+
 public class MainWindow implements GLEventListener{
 	
 	private GLU glu = new GLU();
 	private static float fi=0;
 	private static char side='o';
+	private static float cube_size = 100.0f;
+	private static ArrayList<Voxel> voxels = new ArrayList<>();
+	
 	
 	
 	private static float[][] coor_vec = new float[3][3];
@@ -44,28 +64,40 @@ public class MainWindow implements GLEventListener{
 	    
 	    frame.addKeyListener(new KeyAdapter() {
     	  	public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+                if(e.getKeyCode() == KeyEvent.VK_Q) {	
+                	fi = 0.005f;
+                	side = 'X';
                 	
-                	fi = 0.05f;
-                	side = 'Y';
-                	
-                }
-                if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                	
-                	fi = -0.05f;
-                	side = 'Y';
-                	
-                }
-                if(e.getKeyCode() == KeyEvent.VK_UP) {
-                	
-                	fi = 0.05f;
+                } else if(e.getKeyCode() == KeyEvent.VK_A) {
+                	fi = -0.005f;
                 	side = 'X';
                 	
                 }
-                if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+                if(e.getKeyCode() == KeyEvent.VK_W) {
+                	fi = 0.005f;
+                	side = 'Y';
                 	
-                	fi = -0.05f;
-                	side = 'X';
+                }else if(e.getKeyCode() == KeyEvent.VK_S) {
+                	fi = -0.005f;
+                	side = 'Y';
+                	
+                }
+                
+                if(e.getKeyCode() == KeyEvent.VK_E) {
+                	fi = 0.005f;
+                	side = 'Z';
+                	
+                }else if(e.getKeyCode() == KeyEvent.VK_D) {
+                	fi = -0.005f;
+                	side = 'Z';
+                	
+                }
+                
+                if(e.getKeyCode() == KeyEvent.VK_UP && cube_size<200) {
+                	cube_size+=2;
+                	
+                }else if(e.getKeyCode() == KeyEvent.VK_DOWN && cube_size>10) {
+                		cube_size-=2;
                 	
                 }
             }
@@ -76,6 +108,40 @@ public class MainWindow implements GLEventListener{
              
         });
 	    
+	    frame.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub	
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+	    	
+	    });
+	    
 	    final FPSAnimator animator = new FPSAnimator(glcanvas, 300,true);
 		
 	    animator.start();
@@ -84,6 +150,7 @@ public class MainWindow implements GLEventListener{
 
 	@Override
 	public void init(GLAutoDrawable drawable) {
+		
 		final GL2 gl = drawable.getGL().getGL2();
 		gl.glShadeModel( GL2.GL_SMOOTH );
 	    gl.glClearColor( 0f, 0f, 0f, 0f );
@@ -104,15 +171,39 @@ public class MainWindow implements GLEventListener{
 	public void display(GLAutoDrawable drawable) {
 		final GL2 gl = drawable.getGL().getGL2();
 		
+		//gl.glInitNames();
+		
 		gl.glClearColor(0.2f, 0.2f, 0.2f, 1f);
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT );
 		gl.glLoadIdentity();
 		gl.glTranslatef( 0f, 0f, -3.0f ); 
 		
-		Voxel cube = new Voxel(gl, 100f, 46f, 139f, 87f);
+		Voxel cube = new Voxel(gl, cube_size, 46f, 139f, 87f);
 		cube.setPos(0, 0, 0);
+		//voxels.add(cube);
+		
+		Voxel cube2 = new Voxel(gl, cube_size, 46f, 139f, 87f);
+		cube2.setPos(cube_size*2, 0, 0);
+		//voxels.add(cube2);
+		
+		
 		cube.rotate(coor_vec, fi, side);
+		cube2.rotate(coor_vec, fi, side);
+		
 		cube.draw();
+		cube2.draw();
+		
+		/*
+		for(int i=0; i<voxels.size(); i++) {
+			voxels.get(i).rotate(coor_vec, fi, side);	
+		}
+		for(int i=0; i<voxels.size(); i++) {
+			voxels.get(i).draw();
+				
+		}*/
+		
+		
+		
 		
 		//fi+=0.01f;
 		
