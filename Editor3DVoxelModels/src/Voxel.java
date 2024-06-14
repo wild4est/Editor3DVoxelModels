@@ -1,4 +1,5 @@
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
 
 
 public class Voxel {
@@ -33,6 +34,27 @@ public class Voxel {
 		FillCoordinate();
 	}
 	
+	
+	Voxel(float vs, float r, float g, float b){
+		//gl = gl2;
+		vox_size = vs;
+		
+		Rcolor = r/255;
+		Gcolor = g/255;
+		Bcolor = b/255;
+		
+		x_per = 0;
+		y_per = 0;
+		z_per = 0;
+		
+		
+		FillCoordinate();
+	}
+	
+	public void setGL(GL2 tmpgl) {
+		gl = tmpgl;
+	}
+	
 	public void setPos(float x, float y, float z) {
 		x_per = x;
 		y_per = y;
@@ -65,6 +87,8 @@ public class Voxel {
 	}
 	
 	
+	
+	
 	public float getX() {
 		return x_per;
 	}
@@ -80,7 +104,20 @@ public class Voxel {
 	public float[][] getCoor() {
 		return coordinate;
 	}
-
+	
+	public VoxelSide[] getVoxelsSides() {
+		return vsides;
+	}
+	
+	public boolean checVSides(GLU glu, float x, float y) {
+		for(int i=0; i<vsides.length; i++) {
+			if(vsides[i].checkHit(gl, glu, x, y)) {
+				return true; 
+			}
+			System.out.println("----------------------------------------");
+		}
+		return false;
+	}
 	
 	public void draw() {
 		
